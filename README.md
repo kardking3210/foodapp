@@ -21,3 +21,5 @@ Open http://localhost:3000.
 - Accounts and offers persist in `data.json` in this folder. That file is excluded from Git.
 
 This is a local prototype. It uses a lightweight JSON file store and cookie sessions; it is not configured for public production deployment.
+
+- Use **Find near me** to sort/filter food by distance, or let a restaurant save GPS coordinates for directions. Browser location is requested only after the user clicks GPS. GPS works on localhost or HTTPS; browsers block it on ordinary HTTP network addresses.
