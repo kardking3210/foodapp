@@ -28,4 +28,4 @@ const server=http.createServer(async(req,res)=>{try{
  }
  let file=url.pathname==='/'?path.join(root,'index.html'):path.join(root,url.pathname.replace(/^\//,''));if(!file.startsWith(root))return json(res,403,{error:'Forbidden'});if(!fs.existsSync(file)||fs.statSync(file).isDirectory())file=path.join(root,'index.html');let ext=path.extname(file);res.writeHead(200,{'Content-Type':ext==='.html'?'text/html; charset=utf-8':'application/octet-stream'});fs.createReadStream(file).pipe(res);
  }catch(e){json(res,500,{error:e.message||'Server error'})}});
-server.listen(port,'127.0.0.1',()=>console.log(`SharePlate is running at http://localhost:${port}`));
+const lifecycleTimer=setInterval(()=>{try{activateFallbacks(read())}catch(error){console.error('Offer lifecycle update failed',error)}},15000);lifecycleTimer.unref();server.listen(port,'127.0.0.1',()=>console.log(`SharePlate is running at http://localhost:${port}`));
