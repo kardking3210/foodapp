@@ -28,7 +28,7 @@ The server binds to this computer only (`127.0.0.1`). Accounts, offers, and rese
 
 ### Location and map services
 
-Browser GPS is requested only after a user chooses a location action. GPS sorting stays in the browser. Searching hotels by area sends the typed place name to OpenStreetMap Nominatim and then searches OpenStreetMap Overpass for hotels within 5 km. Searching by GPS sends the selected coordinates to Overpass. Area and hotel results are cached for the browser session, and area searches are rate-limited.
+Browser GPS is requested only after a user chooses a location action. GPS sorting stays in the browser. Searching hotels by area sends the typed place name to OpenStreetMap Nominatim and then searches OpenStreetMap Overpass for hotels within 5 km. Searching by GPS sends the selected coordinates to Overpass. Area and hotel results are cached for the browser session, and area searches are rate-limited. Hotel lookup tries two global Overpass services in sequence with a short timeout per service, so a slow endpoint does not hold up the whole search.
 
 The map uses Leaflet and OpenStreetMap tiles, so it needs an internet connection. Map data is attributed to [OpenStreetMap contributors](https://www.openstreetmap.org/copyright). The public tile service is best-effort and subject to its [tile usage policy](https://operations.osmfoundation.org/policies/tiles/). Area search follows the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/). Use a dedicated map and geocoding provider or self-hosted services before a public or commercial launch.
 
