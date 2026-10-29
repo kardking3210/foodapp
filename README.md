@@ -1,29 +1,37 @@
 # SharePlate
 
-A local full-stack prototype for sharing restaurant surplus food with nearby community members and clubs.
+SharePlate connects hotel and restaurant kitchens with nearby community members and clubs so surplus meals can be collected instead of wasted.
 
 ## Run locally
 
-Requires Node.js 18 or newer. No third-party packages are needed.
+Requires Node.js 18 or newer. The server has no npm package dependencies.
+
+From the project root, run:
 
 ```powershell
 npm start
 ```
 
-Open http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000). Keep the terminal open while using SharePlate and press `Ctrl+C` to stop it. To use another port, set the `PORT` environment variable before starting the server.
 
-## Prototype flows
+The server binds to this computer only (`127.0.0.1`). Accounts, offers, and reservations are stored in `data.json` beside the server. That file is ignored by Git. Sign-in sessions last seven days.
 
-- Register as a restaurant, community club, or community member.
-- Restaurants list discounted offers or club donations with meal count, price, location, date, and pickup window.
-- Clubs and members reserve offers and see pickup details in **My activity**.
-- Restaurants confirm completed pickups. Each confirmation adds 10 points to the restaurant Food Score, starting from 50.
-- Accounts and offers persist in `data.json` in this folder. That file is excluded from Git.
+## MVP features
 
-This is a local prototype. It uses a lightweight JSON file store and cookie sessions; it is not configured for public production deployment.
+- Accounts for hotel kitchens, restaurants and cafes, community clubs, and community members.
+- Food offers with meal count, price or donation, pickup area and window, optional GPS pin, meal details, and known allergens.
+- Search, offer filters, distance sorting, directions, and an interactive map.
+- Partial reservations: members choose a meal count, and cancelled reservations return meals to availability.
+- Six-digit pickup codes that food businesses verify at handoff.
+- Optional club-first donation fallback for unclaimed discounted offers.
+- A public hotel lookup within 5 km. Enter an area or choose GPS; results appear on the map and in the hotel list.
 
-- Use **Find near me** to sort/filter food by distance, or let a restaurant save GPS coordinates for directions. Browser location is requested only after the user clicks GPS. GPS works on localhost or HTTPS; browsers block it on ordinary HTTP network addresses.
+### Location and map services
 
-- Restaurant signup requests browser GPS and requires a saved coordinate pin; new food listings use that pin automatically.
-- A discounted offer can switch at a restaurant-set cutoff to a free donation for its selected club partner. That partner gets first claim.
-- Reservations include a six-digit pickup code, which the restaurant must verify to confirm collection.
+Browser GPS is requested only after a user chooses a location action. GPS sorting stays in the browser. Searching hotels by area sends the typed place name to OpenStreetMap Nominatim and then searches OpenStreetMap Overpass for hotels within 5 km. Searching by GPS sends the selected coordinates to Overpass. Area and hotel results are cached for the browser session, and area searches are rate-limited.
+
+The map uses Leaflet and OpenStreetMap tiles, so it needs an internet connection. Map data is attributed to [OpenStreetMap contributors](https://www.openstreetmap.org/copyright). The public tile service is best-effort and subject to its [tile usage policy](https://operations.osmfoundation.org/policies/tiles/). Area search follows the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/). Use a dedicated map and geocoding provider or self-hosted services before a public or commercial launch.
+
+## Deployment status
+
+This is a locally hosted MVP, not a public production service. A public launch needs a hosted database, backups and restore procedures, monitoring, and a map provider sized for expected traffic.
